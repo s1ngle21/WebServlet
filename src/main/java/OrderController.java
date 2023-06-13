@@ -90,7 +90,7 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (InputStream is = req.getInputStream();
-                OutputStream os = resp.getOutputStream()){
+             OutputStream os = resp.getOutputStream()) {
             JsonNode orderJson = this.objectMapper.readTree(is);
             Order order = new Order();
             order.setId(orderJson.get("id").asInt());
@@ -120,5 +120,55 @@ public class OrderController extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        String[] parts = pathInfo.split("/");
+        if (parts.length > 0) {
+            int id = Integer.parseInt(parts[parts.length - 1]);
+            Order existingOrder = this.orderRepository.getOrderById(id);
+            if (existingOrder != null) {
+                try (InputStream is = req.getInputStream();
+                     OutputStream os = resp.getOutputStream()) {
+                    JsonNode orderJson = this.objectMapper.readTree(is);
+                    existingOrder.setCost(orderJson.get("cost").asDouble());
 
+                    List<Product> updatedProducts = new ArrayList<>();
+                    JsonNode productsJson = orderJson.get("products");
+                    if (productsJson.isArray()) {
+                        for (JsonNode p : productsJson) {
+                            Product product = new Product();
+                            product.setId(p.get("id").asInt());
+                            product.setName(p.get("name").asText());
+                            product.setCost(p.get("cost").asDouble());
+                            updatedProducts.add(product);
+                        }
+                    }
+                    existingOrder.setProducts(updatedProducts);
+                    this.orderRepository.updateOrder(id, existingOrder);
+
+                    byte[] updatedOrder = this.objectMapper.writeValueAsBytes(existingOrder);
+                    os.write(updatedOrder);
+                    os.flush();
+                    resp.setContentLength(updatedOrder.length);
+                    resp.setStatus(200);
+                    resp.setContentType("text/json");
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String pathInfo = req.getPathInfo();
+        String[] parts = pathInfo.split("/");
+        if (parts.length > 0) {
+            int id = Integer.parseInt(parts[parts.length - 1]);
+            Order existingOrder = this.orderRepository.getOrderById(id);
+            if (existingOrder != null) {
+                this.orderRepository.deleteOrder(id);
+                resp.setStatus(200);
+            }
+        }
+    }
 }

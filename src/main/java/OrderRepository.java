@@ -24,4 +24,22 @@ public class OrderRepository {
     public void addOrder(Order order) {
         this.orders.put(order.getId(), order);
     }
+
+    public void deleteOrder(int id) {
+        this.orders.remove(id);
+    }
+
+    public void updateOrder(int id, Order order) {
+        List<Order> orderList = new ArrayList<>(this.orders.values());
+        int index = getIndexByOrderId(id);
+        orderList.set(index, order);
+    }
+
+    public int getIndexByOrderId(int id) {
+        for (int i = 0; i < orders.size(); i++) {
+            if (orders.get(i).getId() == id);
+            return i;
+        }
+        return -1;
+    }
 }

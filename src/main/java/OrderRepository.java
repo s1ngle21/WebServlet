@@ -1,3 +1,5 @@
+import entity.Order;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,12 +16,9 @@ public class OrderRepository {
         return this.orders.get(id);
     }
 
-    public String getAllOrders() {
-        StringBuffer sb = new StringBuffer();
-        List<Order> orderList = new ArrayList<>(this.orders.values());
-        orderList
-                .forEach(order -> sb.append(order).append("\n"));
-        return sb.toString();
+    public List<Order> getAllOrders() {
+        List<Order> orderList = new ArrayList<>(orders.values());
+        return orderList;
     }
 
     public void addOrder(Order order) {

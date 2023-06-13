@@ -1,3 +1,7 @@
+package entity;
+
+import entity.Product;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -8,6 +12,9 @@ public class Order {
     private double cost;
     private List<Product> products;
 
+
+    public Order() {
+    }
 
     public Order(int id, LocalDate date, double cost, List<Product> products) {
         this.id = id;
@@ -50,7 +57,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "entity.Order{" +
                 "id=" + id +
                 ", date=" + date +
                 ", cost=" + cost +

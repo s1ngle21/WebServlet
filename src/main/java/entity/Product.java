@@ -1,7 +1,12 @@
+package entity;
+
 public class Product {
     private int id;
     private String name;
     private double cost;
+
+    public Product() {
+    }
 
     public Product(int id, String name, double cost) {
         this.id = id;
@@ -35,7 +40,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "entity.Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cost=" + cost +

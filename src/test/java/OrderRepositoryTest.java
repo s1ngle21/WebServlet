@@ -97,10 +97,5 @@ public class OrderRepositoryTest {
         Order expextedOrder = newOrder;
         Order actual = orderMap.get(1);
         assertEquals(expextedOrder, actual);
-
-
-
     }
-
-
 }

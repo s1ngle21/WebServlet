@@ -1,9 +1,6 @@
 import entity.Order;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderRepository {
     private Map<Integer, Order> orders;
@@ -16,12 +13,12 @@ public class OrderRepository {
         return this.orders.get(id);
     }
 
-    public List<Order> getAllOrders() {
-        List<Order> orderList = new ArrayList<>(orders.values());
-        return orderList;
+    public Map<Integer, Order> getAllOrders() {
+        return orders;
     }
 
     public void addOrder(Order order) {
+        Objects.requireNonNull(order);
         this.orders.put(order.getId(), order);
     }
 
@@ -30,16 +27,11 @@ public class OrderRepository {
     }
 
     public void updateOrder(int id, Order order) {
-        List<Order> orderList = new ArrayList<>(this.orders.values());
-        int index = getIndexByOrderId(id);
-        orderList.set(index, order);
+        orders.put(id, order);
     }
 
-    public int getIndexByOrderId(int id) {
-        for (int i = 0; i < orders.size(); i++) {
-            if (orders.get(i).getId() == id);
-            return i;
-        }
-        return -1;
+
+    public void setOrders(Map<Integer, Order> orders) {
+        this.orders = orders;
     }
 }

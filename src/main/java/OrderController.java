@@ -55,7 +55,7 @@ public class OrderController extends HttpServlet {
         String[] parts = pathInfo.split("/");
         if (parts.length == 0) {
             try (OutputStream os = resp.getOutputStream()) {
-                List<Order> orderList = this.orderRepository.getAllOrders();
+                List<Order> orderList = new ArrayList<>(this.orderRepository.getAllOrders().values());
                 List<byte[]> allOrdersAsBytesList = new ArrayList<>();
                 byte[] orderAsBytes = null;
                 for (Order o : orderList) {

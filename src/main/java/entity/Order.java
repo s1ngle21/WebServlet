@@ -71,11 +71,11 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id;
+        return id == order.id && Double.compare(order.cost, cost) == 0 && Objects.equals(date, order.date) && Objects.equals(products, order.products);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, date, cost, products);
     }
 }

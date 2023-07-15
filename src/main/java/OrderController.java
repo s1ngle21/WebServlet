@@ -70,7 +70,7 @@ public class OrderController extends HttpServlet {
                 os.write(allOrdersByBytes);
                 resp.setStatus(200);
                 resp.setContentLength(allOrdersByBytes.length);
-                resp.setContentType("text/json");
+                resp.setContentType("application/json");
             }
         } else {
             String id = parts[parts.length - 1];
@@ -81,7 +81,7 @@ public class OrderController extends HttpServlet {
                 os.flush();
                 resp.setStatus(200);
                 resp.setContentLength(orderAsBytes.length);
-                resp.setContentType("text/json");
+                resp.setContentType("application/json");
             }
         }
     }
@@ -116,12 +116,12 @@ public class OrderController extends HttpServlet {
             os.flush();
             resp.setContentLength(createdProduct.length);
             resp.setStatus(200);
-            resp.setContentType("text/json");
+            resp.setContentType("application/json");
         }
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String pathInfo = req.getPathInfo();
         String[] parts = pathInfo.split("/");
         if (parts.length > 0) {
@@ -152,7 +152,7 @@ public class OrderController extends HttpServlet {
                     os.flush();
                     resp.setContentLength(updatedOrder.length);
                     resp.setStatus(200);
-                    resp.setContentType("text/json");
+                    resp.setContentType("application/json");
                 }
             }
         }

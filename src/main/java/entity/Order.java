@@ -4,6 +4,7 @@ import entity.Product;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Order {
@@ -63,5 +64,18 @@ public class Order {
                 ", cost=" + cost +
                 ", products=" + products +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id && Double.compare(order.cost, cost) == 0 && Objects.equals(date, order.date) && Objects.equals(products, order.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, cost, products);
     }
 }

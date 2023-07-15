@@ -70,7 +70,7 @@ public class OrderController extends HttpServlet {
                 os.write(allOrdersByBytes);
                 resp.setStatus(200);
                 resp.setContentLength(allOrdersByBytes.length);
-                resp.setContentType("text/json");
+                resp.setContentType("application/json");
             }
         } else {
             String id = parts[parts.length - 1];
@@ -81,7 +81,7 @@ public class OrderController extends HttpServlet {
                 os.flush();
                 resp.setStatus(200);
                 resp.setContentLength(orderAsBytes.length);
-                resp.setContentType("text/json");
+                resp.setContentType("application/json");
             }
         }
     }
@@ -116,7 +116,7 @@ public class OrderController extends HttpServlet {
             os.flush();
             resp.setContentLength(createdProduct.length);
             resp.setStatus(200);
-            resp.setContentType("text/json");
+            resp.setContentType("application/json");
         }
     }
 
